@@ -1,0 +1,153 @@
+======================================================
+🚀 Workstatus Windows Deployment Started
+======================================================
+
+
+======================================================
+🖥️  HOST: 192.168.2.216
+   email: arshvisible1@yopmail.com
+======================================================
+
+
+======================================================
+🔐 Getting Workstatus user token
+   email: arshvisible1@yopmail.com
+======================================================
+
+API Response:
+{"response":{"code":"200","message":"Token","data":{"token":"YXJzaFZpc2libGUxQHlvcG1haWwuY29t17833223751097685840-9055"}}}
+
+✅ Token received for arshvisible1@yopmail.com
+
+▶ [1/5] Creating user_token_file.txt...
+/usr/lib/python3/dist-packages/paramiko/pkey.py:82: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/paramiko/transport.py:261: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/ntlm_auth/rc4.py:18: CryptographyDeprecationWarning: ARC4 has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.ARC4 and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  algo = algorithms.ARC4(key)
+192.168.2.216 | CHANGED | rc=0 >>
+TOKEN_FILE_SUCCESS
+TOKEN_FILE_PATH=C:\Users\yash\Downloads\user_token_file.txt
+TOKEN_FILE_SIZE=57
+✅ [SUCCESS] user_token_file.txt created
+
+▶ [2/5] Downloading Workstatus package...
+/usr/lib/python3/dist-packages/paramiko/pkey.py:82: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/paramiko/transport.py:261: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/ntlm_auth/rc4.py:18: CryptographyDeprecationWarning: ARC4 has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.ARC4 and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  algo = algorithms.ARC4(key)
+192.168.2.216 | CHANGED | rc=0 >>
+DOWNLOAD_URL=https://app.workstatus.io/downloads/windows/py/7.0/Workstatus.zip
+ZIP_DOWNLOAD_SUCCESS
+ZIP_PATH=C:\Users\yash\Downloads\Workstatus.zip
+ZIP_SIZE=61.24 MB
+DOWNLOAD_SUCCESS
+EXE_PATH=C:\Users\yash\Downloads\workstatus_extract\Workstatus.exe
+APP_PATH=C:\Users\yash\Downloads\workstatus_extract
+INTERNAL_PATH=C:\Users\yash\Downloads\workstatus_extract\_internal
+EXE_SIZE=14.31 MB
+✅ [SUCCESS] Workstatus package downloaded and extracted
+
+▶ [3/5] Verifying Workstatus and token...
+/usr/lib/python3/dist-packages/paramiko/pkey.py:82: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/paramiko/transport.py:261: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/ntlm_auth/rc4.py:18: CryptographyDeprecationWarning: ARC4 has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.ARC4 and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  algo = algorithms.ARC4(key)
+192.168.2.216 | CHANGED | rc=0 >>
+EXE_EXISTS
+EXE_PATH=C:\Users\yash\Downloads\workstatus_extract\Workstatus.exe
+EXE_SIZE=14.31 MB
+INTERNAL_EXISTS
+INTERNAL_PATH=C:\Users\yash\Downloads\workstatus_extract\_internal
+TOKEN_FILE_EXISTS
+TOKEN_FILE_PATH=C:\Users\yash\Downloads\user_token_file.txt
+TOKEN_FILE_SIZE=57
+VERIFY_SUCCESS
+✅ [SUCCESS] Workstatus and token verified
+
+▶ [4/5] Starting Workstatus and enabling autostart...
+/usr/lib/python3/dist-packages/paramiko/pkey.py:82: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/paramiko/transport.py:261: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/ntlm_auth/rc4.py:18: CryptographyDeprecationWarning: ARC4 has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.ARC4 and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  algo = algorithms.ARC4(key)
+192.168.2.216 | SUCCESS => {
+    "changed": false,
+    "checksum": "03e67ba3788bf0b42efe25a3e6ef0bf35902032f",
+    "dest": "C:\\Users\\Public\\ws_start.ps1",
+    "operation": "file_copy",
+    "original_basename": "start_workstatus.ps1",
+    "size": 12007,
+    "src": "/home/yash/Downloads/yash linux ansible live/yash window ansible live/start_workstatus.ps1"
+}
+/usr/lib/python3/dist-packages/paramiko/pkey.py:82: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/paramiko/transport.py:261: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+/usr/lib/python3/dist-packages/ntlm_auth/rc4.py:18: CryptographyDeprecationWarning: ARC4 has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.ARC4 and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  algo = algorithms.ARC4(key)
+192.168.2.216 | CHANGED | rc=0 >>
+EXTRACTED_WORKSTATUS_FOUND
+SOURCE_EXE=C:\Users\yash\Downloads\workstatus_extract\Workstatus.exe
+SOURCE_DIRECTORY=C:\Users\yash\Downloads\workstatus_extract
+INTERNAL_DIRECTORY_FOUND
+TOKEN_FILE_FOUND
+SOURCE_TOKEN_COPY_SUCCESS
+SOURCE_TOKEN_PATH=C:\Users\yash\Downloads\workstatus_extract\user_token_file.txt
+
+Installing complete Workstatus copy to AppData...
+INSTALL_DEST=C:\Users\yash\AppData\Roaming\Workstatus
+INSTALL_COPY_SUCCESS
+ROBOCOPY_EXIT=1
+INTERNAL_SOURCE_FILES=2876
+INTERNAL_DEST_FILES=2876
+INSTALLED_WORKSTATUS_FOUND
+INSTALLED_EXE=C:\Users\yash\AppData\Roaming\Workstatus\Workstatus.exe
+INSTALLED_INTERNAL=C:\Users\yash\AppData\Roaming\Workstatus\_internal
+INSTALLED_TOKEN_COPY_SUCCESS
+INSTALLED_TOKEN=C:\Users\yash\AppData\Roaming\Workstatus\user_token_file.txt
+INSTALLED_TOKEN_VERIFIED
+
+Registering Workstatus autostart...
+AUTOSTART_USER=YASH\yash
+AUTOSTART_USERNAME=yash
+AUTOSTART_USERDOMAIN=YASH
+AUTOSTART_LAUNCHER_SUCCESS
+AUTOSTART_CMD=C:\Users\yash\AppData\Roaming\Workstatus\start-workstatus.cmd
+AUTOSTART_VBS=C:\Users\yash\AppData\Roaming\Workstatus\start-workstatus.vbs
+AUTOSTART_TASK_SUCCESS
+AUTOSTART_TASK=Workstatus
+AUTOSTART_TASK_USER=YASH\yash
+AUTOSTART_TASK_STATE=Ready
+AUTOSTART_REGISTRY_SUCCESS
+AUTOSTART_REGISTRY=wscript.exe //nologo "C:\Users\yash\AppData\Roaming\Workstatus\start-workstatus.vbs"
+AUTOSTART_SHORTCUT_SUCCESS
+AUTOSTART_SHORTCUT=C:\Users\yash\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\Workstatus.lnk
+AUTOSTART_APPROVED_SUCCESS
+AUTOSTART_REGISTERED
+
+Starting installed Workstatus...
+INTERACTIVE_SESSION_FOUND
+SCHEDULED_TASK_STARTED
+EXPLORER_LAUNCHED
+WORKSTATUS_PROCESS_RUNNING
+WORKSTATUS_PIDS=3012,10088
+WORKSTATUS_START_SUCCESS
+
+✅ [SUCCESS] Workstatus started and autostart enabled on 192.168.2.216
+   It will launch at user logon / after reboot
+
+======================================================
+🎯 FINAL STATUS: 192.168.2.216 → SUCCESS
+======================================================
+
+
+======================================================
+🏁 All Windows installations processed
+======================================================

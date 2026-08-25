@@ -1,0 +1,109 @@
+
+Server System configuration
+
+1. Server System Requirements
+The server system is the Linux machine from which the Workstatus Visible App installation will be triggered.
+The following packages are required on the server:
+
+The server system must be a Linux-based system.
+Ansible
+SSH
+Software Properties Common
+
+
+1.1 Install Ansible
+Open the terminal on the server system and run the following commands:
+
+sudo apt update
+sudo apt install ssh -y
+sudo apt install software-properties-common -y
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible -y
+Verify Ansible Installation
+
+ansible --version
+If Ansible is installed successfully, the installed Ansible version will be displayed.
+
+
+
+1.2 Enable SSH on the Server
+SSH is required for communication between the Ansible server and the target Linux system.
+Note: This step is optional if SSH is already enabled.
+Start the SSH service:
+
+sudo systemctl start ssh
+Enable SSH to start automatically after reboot:
+
+sudo systemctl enable ssh
+Check the SSH service status:
+
+sudo systemctl status ssh
+The status should show:
+Active: active (running)
+
+
+1.3 Verify client system
+ run following 
+   - ansible -i inventory.ini 192.168.3.210 -m ansible.windows.win_ping
+expected result
+
+Success:
+
+192.168.3.210 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Windows client system configuration
+
+Windows System Steps
+1.Check User system network should be private if not then run following command via powershell open as administrator
+  -Get-NetConnectionProfile
+  if NetworkCategory : Public showing then  run following command 
+   - Set-NetConnectionProfile -InterfaceIndex <INDEX> -NetworkCategory Private
+   
+   e.g Set-NetConnectionProfile -InterfaceIndex 13 -NetworkCategory Private
+   
+   verify NewworkCategory is becom Private so run again following command
+   -Get-NetConnectionProfile
+   
+2.Check WinRM is enable
+  -winrm quickconfig
+  -enter Y
+  -enter Y
+  
+3.Check Listener
+ run following command
+ -winrm enumerate winrm/config/listener
+  Expected:
+    -Transport = HTTP
+    -Port = 5985
+
+4.WinRM service authentication
+ run following command and check  basic = true 
+  -winrm get winrm/config/service/auth
+  if Basic = false then create true by using following command
+   Set-Item -Path WSMan:\localhost\Service\AllowUnencrypted -Value $true
+  verify Basic = true run follow command
+  - winrm get winrm/config/service/auth
+  
+5.Verify System User has Admin access
+  run following command
+  - Get-LocalUser {System Username}
+  
+ if want to create new admin user then follow command
+ - Add-LocalGroupMember -Group Administrators -Member {system username}
+
+6.check following 
+
+Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $true
+Set-Item -Path WSMan:\localhost\Service\AllowUnencrypted -Value $true
+  
+ 
+
+
+
+
+
