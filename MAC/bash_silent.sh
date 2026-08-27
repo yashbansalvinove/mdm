@@ -189,6 +189,28 @@ while IFS= read -r line || [[ -n "$line" ]]; do
 
 set -e
 
+sudo_rm() {
+    local path="$1"
+    [ -e "$path" ] || return 0
+
+    chmod -R u+w "$path" 2>/dev/null || true
+    chflags -R nouchg,noschg "$path" 2>/dev/null || true
+
+    if rm -rf "$path" 2>/dev/null; then
+        echo "REMOVED=$path"
+        return 0
+    fi
+
+    printf '%s\n' "$SUDO_PASS" | sudo -S -p "" chflags -R nouchg,noschg "$path" >/dev/null 2>&1 || true
+    if printf '%s\n' "$SUDO_PASS" | sudo -S -p "" rm -rf "$path"; then
+        echo "REMOVED_WITH_SUDO=$path"
+        return 0
+    fi
+
+    echo "REMOVE_FAILED=$path"
+    return 1
+}
+
 echo "Removing existing Workstatus..."
 
 pkill -f "[Ww]orkstatus" 2>/dev/null || true
@@ -208,16 +230,12 @@ for app_path in \
     "$HOME/Applications/Workstatus.app" \
     "$HOME/Applications/Workstatus Desktop.app"
 do
-    if [ -d "$app_path" ]; then
-        rm -rf "$app_path"
-        echo "REMOVED_APP=$app_path"
-    fi
+    sudo_rm "$app_path" || true
 done
 
 SUPPORT_DIR="$HOME/Library/Application Support/Workstatus"
 if [ -d "$SUPPORT_DIR" ]; then
-    rm -rf "$SUPPORT_DIR"
-    echo "REMOVED_APPSUPPORT=$SUPPORT_DIR"
+    sudo_rm "$SUPPORT_DIR"
 else
     echo "APPSUPPORT_ALREADY_ABSENT"
 fi
