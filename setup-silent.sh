@@ -72,10 +72,12 @@ while IFS= read -r line; do
     IP=$(echo "$line" | awk '{print $1}')
     USER=$(echo "$line" | sed -n 's/.*user=\([^ ]*\).*/\1/p')
     PASS=$(echo "$line" | sed -n 's/.*pass=\([^ ]*\).*/\1/p')
+    USER_EMAIL=$(echo "$line" | sed -n 's/.*email=\([^ ]*\).*/\1/p')
 
     echo
     echo "========================================"
     echo "Connecting to $USER@$IP"
+    echo "  email: ${USER_EMAIL:-<missing>}"
     echo "========================================"
 
 
@@ -106,8 +108,89 @@ set -e
 
 WORKSTATUS_DIR="$HOME/Workstatus"
 TOKEN_FILE="$WORKSTATUS_DIR/user_token_file.txt"
-WORKSTATUS_FILE="$WORKSTATUS_DIR/workstatus"
+WORKSTATUS_FILE="$WORKSTATUS_DIR/Workstatus"
 
+
+# ============================================================
+# Remove previous Workstatus / Workstatus-Desktop
+# ============================================================
+
+echo
+echo "Removing previous Workstatus files..."
+
+pkill -f "[Ww]orkstatus" 2>/dev/null || true
+pkill -f "Workstatus-Desktop" 2>/dev/null || true
+sleep 2
+
+sudo_rm() {
+    local path="$1"
+    [ -e "$path" ] || return 0
+
+    chmod -R u+w "$path" 2>/dev/null || true
+
+    if rm -rf "$path" 2>/dev/null; then
+        echo "REMOVED=$path"
+        return 0
+    fi
+
+    if printf '%s\n' "$PASS" | sudo -S -p "" rm -rf "$path" >/dev/null 2>&1; then
+        echo "REMOVED_WITH_SUDO=$path"
+        return 0
+    fi
+
+    echo "REMOVE_FAILED=$path"
+    return 0
+}
+
+sudo_rm "$HOME/Workstatus"
+sudo_rm "$HOME/Home/Workstatus"
+
+for app_path in \
+    "$HOME/Applications/Workstatus" \
+    "$HOME/Applications/Workstatus.desktop" \
+    "$HOME/Applications/Workstatus-Desktop" \
+    "$HOME/Applications/Workstatus-Desktop.desktop" \
+    "$HOME/.local/share/applications/Workstatus.desktop" \
+    "$HOME/.local/share/applications/Workstatus-Desktop.desktop" \
+    "$HOME/.local/share/applications/workstatus.desktop" \
+    "$HOME/.local/share/applications/workstatus-desktop.desktop" \
+    "$HOME/.config/autostart/Workstatus.desktop" \
+    "$HOME/.config/autostart/Workstatus-Desktop.desktop" \
+    "$HOME/.config/autostart/workstatus.desktop" \
+    "$HOME/.local/share/Workstatus" \
+    "$HOME/.local/share/Workstatus-Desktop" \
+    "$HOME/.config/Workstatus" \
+    "$HOME/.config/Workstatus-Desktop"
+do
+    sudo_rm "$app_path"
+done
+
+printf '%s\n' "$PASS" | sudo -S -p "" bash -c '
+    rm -f /usr/share/applications/Workstatus.desktop \
+          /usr/share/applications/Workstatus-Desktop.desktop \
+          /usr/share/applications/workstatus.desktop \
+          /usr/share/applications/workstatus-desktop.desktop \
+          /usr/local/share/applications/Workstatus.desktop \
+          /usr/local/share/applications/Workstatus-Desktop.desktop \
+          /usr/bin/Workstatus \
+          /usr/bin/Workstatus-Desktop \
+          /usr/local/bin/Workstatus \
+          /usr/local/bin/Workstatus-Desktop
+    rm -rf /opt/Workstatus \
+           /opt/Workstatus-Desktop \
+           /usr/share/Workstatus \
+           /usr/share/Workstatus-Desktop
+' >/dev/null 2>&1 || true
+
+printf '%s\n' "$PASS" | sudo -S -p "" apt-get remove -y --purge workstatus-desktop Workstatus-Desktop 2>/dev/null || true
+printf '%s\n' "$PASS" | sudo -S -p "" dpkg --purge workstatus-desktop Workstatus-Desktop 2>/dev/null || true
+
+find "$HOME/.local/share/applications" "$HOME/.config/autostart" "$HOME/Applications" \
+    -iname "*Workstatus*" 2>/dev/null | while read -r leftover; do
+    sudo_rm "$leftover"
+done || true
+
+echo "✓ Previous Workstatus / Workstatus-Desktop files removed"
 
 # ============================================================
 # Prepare Workstatus directory
@@ -115,17 +198,6 @@ WORKSTATUS_FILE="$WORKSTATUS_DIR/workstatus"
 
 echo
 echo "Preparing Workstatus directory..."
-
-if [ -d "$WORKSTATUS_DIR" ]; then
-    echo "Existing Workstatus directory found."
-
-    # Stop an existing Workstatus process if present
-    pkill -f "$WORKSTATUS_DIR/workstatus" 2>/dev/null || true
-
-    sleep 2
-
-    rm -rf "$WORKSTATUS_DIR"
-fi
 
 mkdir -p "$WORKSTATUS_DIR"
 
@@ -209,7 +281,7 @@ echo "Executing Workstatus..."
 
 cd "$WORKSTATUS_DIR"
 
-./workstatus > "$WORKSTATUS_DIR/workstatus-bootstrap.log" 2>&1 &
+./Workstatus > "$WORKSTATUS_DIR/Workstatus-bootstrap.log" 2>&1 &
 
 WORKSTATUS_PID=$!
 
